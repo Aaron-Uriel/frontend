@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 const double title_size = 30;
+const double button_text_size = 35;
+const String base_url = 'http://192.168.1.7:8080';
 
 void main() {
-  runApp(MyApp());
+    runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.dark,
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            title: 'Flutter Demo',
+            darkTheme: ThemeData(
+                brightness: Brightness.dark,
+            ),
+            themeMode: ThemeMode.dark,
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+        );
+    }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -31,30 +34,54 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
             body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                     Center(
-                        child: Text(
+                        child: Padding(
+                            padding: EdgeInsets.only(top: 20, bottom: 20),
+                            child: Text(
                             '¿Para cuál mesa será la órden?',
                             style: TextStyle(fontSize: title_size),
                             textAlign: TextAlign.center,
-                        )
+                            ),
+                        ),
+                    ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.50,
+                        width: MediaQuery.of(context).size.width * 0.80,
+                        child: GridView.count(
+                            crossAxisCount: 3,
+                            children: List.generate(18, (index) {
+                                return TextButton(
+                                    child: Text(
+                                        '${index+1}',
+                                        style: TextStyle(fontSize: button_text_size),
+                                    ),
+                                    onPressed: null,
+                                );
+                            }),
+                        ),
                     ),
                 ],
             ),
         ),
     );
   }
+}
+
+class Table {
+    final int id;
+    final bool is_occupied;
+
+    Table({
+        required this.id,
+        required this.is_occupied,
+    });
 }
