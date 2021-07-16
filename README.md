@@ -1,16 +1,23 @@
-# taquexpress
+# Taquexpress XD
+## ¿Qué es este proyecto?
+La idea es una aplicación para tomar órdenes en una taquería, esto es solamente el frontend el cual estará hecho en Dart + Rust y Flutter (en dart) como el Framework para crear la interface.
 
-A new Flutter project.
+## Dependencias
+Las únicas dependencias importantes son tener instalados:
+* SDK de Flutter
+* Dart
+* Rust
+Rust necesita agregar las arquitecturas necesarias para poder ejecutarse en teléfonos se puden agregar con ```rustup target add \
+    aarch64-linux-android \
+    aarch64-apple-ios \
+    armv7-linux-androideabi \
+    x86_64-linux-android \
+    x86_64-apple-ios```
 
-## Getting Started
+## Compilación
+Para compilar la librería bastaría con hacer ```cargo build --target *arquitectura*``` específicando cual es la arquitectura para la cual se compilará, por lo que se tendría que repetir el comando varias veces para compilarlo en todas. Una vez compilado se tiene que mover a los directorios necesarios para que Dart pueda acceder a ellos.
+Si todo fue sin problemas solo hace falta ejecutar ```flutter run``` con un teléfono conectado y tener el servidor (backend) encendido.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Directorios en donde se guardan las librerías dinámicas
+* ```packages/server_client/android/src/main/jniLibs/arm64-v8a/```
+* ```packages/server_client/ios/```
