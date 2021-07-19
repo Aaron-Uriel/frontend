@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:server_client/server_client.dart';
+import 'package:http/http.dart' as http;
 
 const double title_size = 30;
 const double button_text_size = 35;
 const String base_url = 'http://192.168.1.7:8080';
 
 void main() {
-  final adder = Adder();
-  final result = adder.add(1, 2);
-  print('${result}');
   runApp(MyApp());
 }
 
