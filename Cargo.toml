@@ -1,7 +1,0 @@
-[workspace]
-members = ["native/server_client", "native/server_client_ffi"]
-
-[profile.release]
-lto = true
-codegen-units = 1
-debug = true # turn it off if you want.
