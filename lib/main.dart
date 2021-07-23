@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const double title_size = 30;
-const double button_text_size = 45;
+const double button_text_size = 60;
 const String base_url = 'http://192.168.1.7:8080/';
 
 final BackendConnector myServer = BackendConnector(base_url);
@@ -70,30 +70,29 @@ class _MyHomePageState extends State<MyHomePage> {
                       final int neededTables = getNeededTables(tablesList.length);
 
                       int linearCount = 1;
-                      return Table(
-                        columnWidths: const <int, TableColumnWidth> {
-                          0: IntrinsicColumnWidth(),
-                          1: IntrinsicColumnWidth(),
-                          2: IntrinsicColumnWidth(),
-                        },
-                        border: TableBorder.all(),
-                        children: List.generate(rows_limit, (row_index) {
-                          return TableRow(
-                            children: List.generate(columns_limit, (column_index) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: TextButton(
-                                  child: Text('${linearCount++}'),
-                                  style: TextButton.styleFrom(
-                                    padding: EdgeInsets.all(16),
-                                  textStyle: TextStyle(fontSize: button_text_size)
+                      return Container(
+                        width: windowsSize.width * 0.9,
+                        child: Table(
+                          children: List.generate(rows_limit, (row_index) {
+                            return TableRow(
+                              children: List.generate(columns_limit, (column_index) {
+                                return Container(
+                                  margin: EdgeInsets.all(windowsSize.height * 0.01),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(18),
+                                    child: TextButton(
+                                      child: Text('${linearCount++}'),
+                                      style: TextButton.styleFrom(
+                                        textStyle: TextStyle(fontSize: button_text_size)
+                                      ),
+                                      onPressed: () {},
+                                    ),
                                   ),
-                                  onPressed: () {},
-                                ),
-                              );
-                            })
-                          );
-                        }),
+                                );
+                              })
+                            );
+                          }),
+                        )
                       );
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
