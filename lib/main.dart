@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const double title_size = 30;
-const double button_text_size = 35;
+const double button_text_size = 45;
 const String base_url = 'http://192.168.1.7:8080/';
 
 final BackendConnector myServer = BackendConnector(base_url);
@@ -46,33 +46,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final windowsSize = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: Text(
-                  '¿Para cuál mesa será la órden?',
-                  style: TextStyle(fontSize: title_size),
-                  textAlign: TextAlign.center,
-                ),
+            Padding(
+              padding: EdgeInsets.only(top: windowsSize.height * 0.05, bottom: windowsSize.height * 0.05),
+              child: Text(
+                '¿Para cuál mesa será la órden?',
+                style: TextStyle(fontSize: title_size),
+                textAlign: TextAlign.center,
               ),
             ),
-            Center(
-              child: FutureBuilder<List<Bench>>(
-                future: tablesList,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final List<Bench> tablesList = snapshot.data!;
-                    final int neededTables = getNeededTables(tablesList.length);
+            Expanded(
+              child: Center(
+                child: FutureBuilder<List<Bench>>(
+                  future: tablesList,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final List<Bench> tablesList = snapshot.data!;
+                      final int neededTables = getNeededTables(tablesList.length);
 
-                    int linearCount = 1;
-                    return Table(
-                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                      int linearCount = 1;
+                      return Table(
+                        columnWidths: const <int, TableColumnWidth> {
+                          0: IntrinsicColumnWidth(),
+                          1: IntrinsicColumnWidth(),
+                          2: IntrinsicColumnWidth(),
+                        },
+                        border: TableBorder.all(),
                         children: List.generate(rows_limit, (row_index) {
                           return TableRow(
                             children: List.generate(columns_limit, (column_index) {
@@ -82,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: Text('${linearCount++}'),
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.all(16),
-                                    textStyle: TextStyle(fontSize: button_text_size)
+                                  textStyle: TextStyle(fontSize: button_text_size)
                                   ),
                                   onPressed: () {},
                                 ),
@@ -90,12 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             })
                           );
                         }),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return CircularProgressIndicator();
-                },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
               ),
             ),
           ],
