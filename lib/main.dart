@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
-const double title_size = 30;
-const double button_text_size = 60;
 const String base_url = 'http://192.168.1.7:8080/';
 
 final BackendConnector myServer = BackendConnector(base_url);
@@ -33,6 +32,13 @@ class MyApp extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 20, 20, 20)),
             textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 60, fontWeight: FontWeight.w300)),
             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            overlayColor: MaterialStateProperty.resolveWith<Color>(
+              (states) {
+                return states.contains(MaterialState.pressed)
+                  ? Color.fromARGB(255, 48, 48, 48)
+                  : Colors.blue;
+              }
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
           ),
         ),
@@ -40,7 +46,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
 
         textTheme: const TextTheme(
-          headline1: TextStyle(fontSize: 40, fontWeight: FontWeight.normal),
+          headline1: TextStyle(fontSize: 35, fontWeight: FontWeight.normal),
         ),
       ),
 
