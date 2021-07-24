@@ -22,11 +22,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      darkTheme: ThemeData(
+      title: 'Tacos xd',
+
+      //Definición del tema para la app
+      theme: ThemeData(
         brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0x000000),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 20, 20, 20)),
+            textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 60, fontWeight: FontWeight.w300)),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
+          ),
+        ),
+
+        fontFamily: 'Roboto',
+
+        textTheme: const TextTheme(
+          headline1: TextStyle(fontSize: 40, fontWeight: FontWeight.normal),
+        ),
       ),
-      themeMode: ThemeMode.dark,
+
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -56,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: windowsSize.height * 0.05, bottom: windowsSize.height * 0.05),
               child: Text(
                 '¿Para cuál mesa será la órden?',
-                style: TextStyle(fontSize: title_size),
+                style: Theme.of(context).textTheme.headline1,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -78,15 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               children: List.generate(columns_limit, (column_index) {
                                 return Container(
                                   margin: EdgeInsets.all(windowsSize.height * 0.01),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(18),
-                                    child: TextButton(
-                                      child: Text('${linearCount++}'),
-                                      style: TextButton.styleFrom(
-                                        textStyle: TextStyle(fontSize: button_text_size)
-                                      ),
-                                      onPressed: () {},
-                                    ),
+                                  child: TextButton(
+                                    child: Text('${linearCount++}'),
+                                    style: Theme.of(context).textButtonTheme.style,
+                                    onPressed: () {},
                                   ),
                                 );
                               })
