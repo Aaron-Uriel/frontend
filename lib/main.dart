@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taquexpress/theme.dart';
 
 import 'package:taquexpress/backend_connector.dart';
-import 'package:taquexpress/database_tables_as_classes.dart' as my_classes;
+import 'package:taquexpress/database_tables_as_classes.dart';
 
 const String base_url = 'http://192.168.1.7:8080/';
 final BackendConnector myServer = BackendConnector(base_url);
@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tacos xd',
-
-      //Definición del tema para la app
       theme: MyTheme.theme,
 
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -41,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<List<my_classes.Table>> tablesList;
+  late Future<List<Bench>> tablesList;
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: Center(
-                child: FutureBuilder<List<my_classes.Table>>(
+                child: FutureBuilder<List<Bench>>(
                   future: tablesList,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      final List<my_classes.Table> tablesList = snapshot.data!;
+                      final List<Bench> tablesList = snapshot.data!;
                       final int neededTables = getNeededTables(tablesList.length);
 
                       int linearCount = 1;

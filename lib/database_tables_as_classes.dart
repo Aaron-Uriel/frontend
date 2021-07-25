@@ -1,14 +1,14 @@
-class Table {
+class Bench {
   final int id;
   final bool isOccupied;
 
-  Table({
+  Bench({
     required this.id,
     required this.isOccupied
   });
 
-  factory Table.fromJson(Map<String, dynamic> json) {
-    return Table(
+  factory Bench.fromJson(Map<String, dynamic> json) {
+    return Bench(
       id: json['id'],
       isOccupied: json['is_occupied']
     );

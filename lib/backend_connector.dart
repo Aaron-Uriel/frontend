@@ -9,12 +9,12 @@ class BackendConnector {
   //Constructor
   BackendConnector(this.baseUrl);
 
-  Future<List<Table>> askForBenchesInfo() async {
+  Future<List<Bench>> askForBenchesInfo() async {
     final response =
       await http.get(Uri.parse(this.baseUrl + 'tables_list'));
     if (response.statusCode == 200) {
       final Iterable rawList = json.decode(response.body);
-      return List<Table>.from(rawList.map((table) => Table.fromJson(table)));
+      return List<Bench>.from(rawList.map((table) => Bench.fromJson(table)));
     } else {
       throw Exception('Failed to load tables list');
     }

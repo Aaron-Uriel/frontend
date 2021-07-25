@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MyTheme {
   static ThemeData get theme => ThemeData(
     brightness: Brightness.dark,
+    accentColor: Color.fromARGB(255, 186, 104, 200),
     scaffoldBackgroundColor: const Color(0x000000),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
