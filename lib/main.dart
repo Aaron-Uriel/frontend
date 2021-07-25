@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tacos xd',
       theme: MyTheme.theme,
-
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -47,10 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: windowsSize.height * 0.05, bottom: windowsSize.height * 0.05),
+              padding: EdgeInsets.only(
+                top: windowsSize.height * 0.05,
+                bottom: windowsSize.height * 0.05,
+              ),
               child: Text(
                 '¿Para cuál mesa será la órden?',
                 style: Theme.of(context).textTheme.headline1,
@@ -58,57 +59,66 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FutureBuilder<List<Bench>>(
-                    future: tablesList,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final List<Bench> tablesList = snapshot.data!;
-                        final int neededTables = getNeededTables(tablesList.length);
+              child: FutureBuilder<List<Bench>>(
+                future: tablesList,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final List<Bench> tablesList = snapshot.data!;
+                    final int neededTables = getNeededTables(tablesList.length);
 
-                        int linearCount = 0;
-                        return Container(
-                          width: windowsSize.width * 0.9,
-                          child: Table(
+                    int linearCount = 0;
+                    return Container(
+                      width: windowsSize.width * 0.9,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Table(
                             children: List.generate(rows_limit, (row_index) {
                               return TableRow(
                                 children: List.generate(columns_limit, (column_index) {
                                   final bool doesThisTableExist = (linearCount < tablesList.length);
-                                  final bool isThisTableAviable = (doesThisTableExist)
-                                    ? !tablesList[linearCount].isOccupied
-                                    : false;
+                                  final bool isThisTableAviable =
+                                    (doesThisTableExist)
+                                      ? !tablesList[linearCount].isOccupied
+                                      : false;
 
                                   return Container(
                                     margin: EdgeInsets.all(windowsSize.height * 0.01),
                                     child: TextButton(
-                                      child: Text('${++linearCount}', style: Theme.of(context).textTheme.headline2,),
-                                      onPressed: (doesThisTableExist && isThisTableAviable)? () {}: null,
+                                      child: Text(
+                                        '${++linearCount}',
+                                        style: Theme.of(context).textTheme.headline2,
+                                      ),
+                                      onPressed: (doesThisTableExist && isThisTableAviable)
+                                        ? () {}
+                                        : null,
                                     ),
                                   );
-                                })
+                                }),
                               );
                             }),
-                          )
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-                      return CircularProgressIndicator();
-                    },
-                  ),
-                  Container(
-                    width: windowsSize.width * 0.90,
-                    margin: EdgeInsets.all(windowsSize.height * 0.01),
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text('Para llevar', style: Theme.of(context).textTheme.bodyText1, textAlign: TextAlign.center,),
-                      style: Theme.of(context).textButtonTheme.style,
-                    ),
-                  ),
-                ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(windowsSize.height * 0.01),
+                            child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Para llevar',
+                                style: Theme.of(context).textTheme.bodyText1,
+                                textAlign: TextAlign.center,
+                              ),
+                              style: Theme.of(context).textButtonTheme.style,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return CircularProgressIndicator();
+                },
               ),
             ),
           ],
@@ -128,6 +138,8 @@ int getNeededTables(int length) {
   final difference = length / table_capacity;
   final roundedDifference = (length / table_capacity).round();
 
-  final int neededTables = (difference > roundedDifference)? roundedDifference + 1: roundedDifference;
+  final int neededTables = (difference > roundedDifference)
+      ? roundedDifference + 1
+      : roundedDifference;
   return neededTables;
 }

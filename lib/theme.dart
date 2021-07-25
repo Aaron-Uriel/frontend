@@ -8,7 +8,6 @@ class MyTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 20, 20, 20)),
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         overlayColor: MaterialStateProperty.resolveWith<Color>(
            (states) {
              return states.contains(MaterialState.pressed)
@@ -26,7 +25,7 @@ class MyTheme {
     textTheme: const TextTheme(
       headline1: TextStyle(fontSize: 35, fontWeight: FontWeight.normal),
       headline2: TextStyle(fontSize: 60, fontWeight: FontWeight.w300),
-      bodyText1: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
+      bodyText1: TextStyle(fontSize: 45, fontWeight: FontWeight.w300),
     ),
   );
 }
