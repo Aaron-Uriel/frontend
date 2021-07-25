@@ -73,12 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: List.generate(rows_limit, (row_index) {
                             return TableRow(
                               children: List.generate(columns_limit, (column_index) {
+                                final bool doesThisTableExist = (linearCount < tablesList.length);
+                                final bool isThisTableAviable = (doesThisTableExist)
+                                  ? !tablesList[linearCount].isOccupied
+                                  : false;
+
                                 return Container(
                                   margin: EdgeInsets.all(windowsSize.height * 0.01),
                                   child: TextButton(
                                     child: Text('${linearCount++}'),
-                                    style: Theme.of(context).textButtonTheme.style,
-                                    onPressed: () {},
+                                    onPressed: (doesThisTableExist && isThisTableAviable)? () {}: null,
                                   ),
                                 );
                               })
