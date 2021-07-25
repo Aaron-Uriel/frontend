@@ -8,7 +8,6 @@ class MyTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 20, 20, 20)),
-        textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontSize: 60, fontWeight: FontWeight.w300)),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         overlayColor: MaterialStateProperty.resolveWith<Color>(
            (states) {
@@ -18,13 +17,16 @@ class MyTheme {
           }
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(10))
       ),
     ),
 
     fontFamily: 'Roboto',
 
-     textTheme: const TextTheme(
+    textTheme: const TextTheme(
       headline1: TextStyle(fontSize: 35, fontWeight: FontWeight.normal),
+      headline2: TextStyle(fontSize: 60, fontWeight: FontWeight.w300),
+      bodyText1: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
     ),
   );
 }

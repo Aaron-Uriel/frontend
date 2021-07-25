@@ -58,44 +58,57 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: Center(
-                child: FutureBuilder<List<Bench>>(
-                  future: tablesList,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final List<Bench> tablesList = snapshot.data!;
-                      final int neededTables = getNeededTables(tablesList.length);
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FutureBuilder<List<Bench>>(
+                    future: tablesList,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final List<Bench> tablesList = snapshot.data!;
+                        final int neededTables = getNeededTables(tablesList.length);
 
-                      int linearCount = 1;
-                      return Container(
-                        width: windowsSize.width * 0.9,
-                        child: Table(
-                          children: List.generate(rows_limit, (row_index) {
-                            return TableRow(
-                              children: List.generate(columns_limit, (column_index) {
-                                final bool doesThisTableExist = (linearCount < tablesList.length);
-                                final bool isThisTableAviable = (doesThisTableExist)
-                                  ? !tablesList[linearCount].isOccupied
-                                  : false;
+                        int linearCount = 0;
+                        return Container(
+                          width: windowsSize.width * 0.9,
+                          child: Table(
+                            children: List.generate(rows_limit, (row_index) {
+                              return TableRow(
+                                children: List.generate(columns_limit, (column_index) {
+                                  final bool doesThisTableExist = (linearCount < tablesList.length);
+                                  final bool isThisTableAviable = (doesThisTableExist)
+                                    ? !tablesList[linearCount].isOccupied
+                                    : false;
 
-                                return Container(
-                                  margin: EdgeInsets.all(windowsSize.height * 0.01),
-                                  child: TextButton(
-                                    child: Text('${linearCount++}'),
-                                    onPressed: (doesThisTableExist && isThisTableAviable)? () {}: null,
-                                  ),
-                                );
-                              })
-                            );
-                          }),
-                        )
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-                    return CircularProgressIndicator();
-                  },
-                ),
+                                  return Container(
+                                    margin: EdgeInsets.all(windowsSize.height * 0.01),
+                                    child: TextButton(
+                                      child: Text('${++linearCount}', style: Theme.of(context).textTheme.headline2,),
+                                      onPressed: (doesThisTableExist && isThisTableAviable)? () {}: null,
+                                    ),
+                                  );
+                                })
+                              );
+                            }),
+                          )
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  ),
+                  Container(
+                    width: windowsSize.width * 0.90,
+                    margin: EdgeInsets.all(windowsSize.height * 0.01),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text('Para llevar', style: Theme.of(context).textTheme.bodyText1, textAlign: TextAlign.center,),
+                      style: Theme.of(context).textButtonTheme.style,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
