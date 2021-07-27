@@ -117,7 +117,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
-                  return CircularProgressIndicator();
+                  //Por alguna razón la cosa esta aparece muy grande si no está dentro de
+                  //un widget como Wrap o Column, no se si sea propiamente un error.
+                  return Column(
+                    children: [
+                      CircularProgressIndicator(),
+                    ],
+                  );
                 },
               ),
             ),
