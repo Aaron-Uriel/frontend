@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taquexpress/theme.dart';
 
 import 'package:taquexpress/backend_connector.dart';
-import 'package:taquexpress/database_tables_as_classes.dart';
+import 'package:taquexpress/database_models_as_classes.dart';
 
 const String base_url = 'http://192.168.1.7:8080/';
 final BackendConnector myServer = BackendConnector(base_url);
@@ -83,15 +83,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ? !tablesList[linearCount].isOccupied
                                       : false;
 
+                                  final tableNumber = ++linearCount;
                                   return Container(
                                     margin: EdgeInsets.all(windowsSize.height * 0.01),
                                     child: TextButton(
                                       child: Text(
-                                        '${++linearCount}',
+                                        '${tableNumber}',
                                         style: Theme.of(context).textTheme.headline2,
                                       ),
                                       onPressed: (doesThisTableExist && isThisTableAviable)
-                                        ? () {}
+                                        ? () {
+                                          print('xd');
+                                          final futureClient = myServer.sendNewClient(clientTableId: tableNumber);
+                                        }
                                         : null,
                                     ),
                                   );
