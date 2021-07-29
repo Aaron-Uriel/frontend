@@ -4,6 +4,7 @@ import 'package:taquexpress/theme.dart';
 
 import 'package:taquexpress/backend_connector.dart';
 import 'package:taquexpress/database_models_as_classes.dart';
+import 'package:taquexpress/taking_orders_page.dart';
 
 const String base_url = 'http://192.168.1.7:8080/';
 final BackendConnector myServer = BackendConnector(base_url);
@@ -43,19 +44,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final windowsSize = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: windowsSize.height * 0.05,
-                bottom: windowsSize.height * 0.05,
-              ),
-              child: Text(
-                '¿Para cuál mesa será la órden?',
-                style: Theme.of(context).textTheme.headline1,
-                textAlign: TextAlign.center,
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: windowsSize.height * 0.05,
+                  bottom: windowsSize.height * 0.05,
+                  left: windowsSize.width * 0.025,
+                  right: windowsSize.height * 0.025,
+                ),
+                child: Text(
+                  '¿Para cuál mesa será la órden?',
+                  style: Theme.of(context).textTheme.headline1,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             Expanded(
@@ -93,8 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ),
                                       onPressed: (doesThisTableExist && isThisTableAviable)
                                         ? () {
-                                          print('xd');
-                                          final futureClient = myServer.sendNewClient(clientTableId: tableNumber);
+                                          final futureCreatedClient = myServer.sendNewClient(clientTableId: tableNumber);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => TakingOrdersPage(futureClient: futureCreatedClient)),
+                                          );
                                         }
                                         : null,
                                     ),
